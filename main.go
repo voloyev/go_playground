@@ -20,7 +20,10 @@ func main() {
 	for _, el := range links {
 		go checkLink(el, c)
 	}
-	fmt.Println(<-c)
+
+	for i := 0; i < len(links); i++ {
+		fmt.Println(<-c) // blocking call
+	}
 }
 
 func checkLink(link string, c chan string) {
