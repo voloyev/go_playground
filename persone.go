@@ -1,3 +1,0 @@
-package person
-import "fmt"
-
