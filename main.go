@@ -11,7 +11,7 @@ func main() {
 		"http://facebook.com",
 		"http://golang.org",
 		"http://cafephilo.lviv.ua",
-		"http://http://10.6.193.162:3000/",
+		"http://10.6.193.162:3000/",
 		"http://10.25.12.143:3000/",
 	}
 
@@ -21,8 +21,8 @@ func main() {
 		go checkLink(el, c)
 	}
 
-	for i := 0; i < len(links); i++ {
-		fmt.Println(<-c) // blocking call
+	for {
+		go checkLink(<-c, c)
 	}
 }
 
@@ -31,10 +31,10 @@ func checkLink(link string, c chan string) {
 
 	if err != nil {
 		fmt.Println(link, "it might be down")
-		c <- "Might be down"
+		c <- link
 		return
 	}
 
 	fmt.Println(link, "is up")
-	c <- "Its up"
+	c <- link
 }
