@@ -1,14 +1,17 @@
 package main
 
 import (
-	"io"
+	"fmt"
 	"os"
 )
 
 func main() {
+	bytesNumber := 300
 	file, err := os.Open(os.Args[1])
 	check(err)
-	io.Copy(os.Stdout, file)
+	bytes := make([]byte, bytesNumber)
+	file.Read(bytes)
+	fmt.Println(string(bytes))
 }
 
 func check(e error) {
