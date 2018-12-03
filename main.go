@@ -4,12 +4,10 @@ import (
 	"fmt"
 )
 
-type MyFile interface {
+type myFile interface {
 	Read() (string, error)
-	Write(content string) (string, error)
+	Write(content *string) (string, error)
 }
-
-// TODO rewrite interface for reference too
 
 type defFile struct {
 	name    string
@@ -20,15 +18,16 @@ func (d defFile) Read() (string, error) {
 	return d.content, nil
 }
 
-func (d defFile) Write(content string) (string, error) {
+func (d *defFile) Write(content string) (defFile, error) {
 	d.name = content
-	return "success", nil
+	return *d, nil
 }
 
 func getName(ff *defFile) string {
-	ff_name, _ := ff.Read()
-	return ff_name
+	ffName, _ := ff.Read()
+	return ffName
 }
+
 func main() {
 	ff := defFile{"bob", "content"}
 	fmt.Println(getName(&ff))
